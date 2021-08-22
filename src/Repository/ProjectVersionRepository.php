@@ -12,4 +12,14 @@ class ProjectVersionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ProjectVersion::class);
     }
+
+    public function persist(ProjectVersion $project): void
+    {
+        $this->getEntityManager()->persist($project);
+    }
+
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 }

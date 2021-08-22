@@ -51,6 +51,7 @@ class Project
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProjectVersion", mappedBy="project")
+     * @ORM\OrderBy({"id": "DESC"})
      * @var Collection<int, ProjectVersion>
      */
     private Collection $versions;

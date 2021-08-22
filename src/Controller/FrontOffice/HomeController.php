@@ -38,7 +38,7 @@ class HomeController extends AbstractController
             'active' => true,
             'project' => $project->getId()
         ], [
-            'name' => 'DESC'
+            'id' => 'DESC'
         ]);
 
         $project->setVersions(new ArrayCollection($versions));

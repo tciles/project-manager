@@ -12,4 +12,23 @@ class ProjectRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Project::class);
     }
+
+    public function findProjectsForVersionsSynchronisation(): array
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->where('p.active = TRUE')
+            ->andWhere('p.fullname IS NOT NULL');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function persist(Project $project): void
+    {
+        $this->getEntityManager()->persist($project);
+    }
+
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
 }
