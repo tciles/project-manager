@@ -1,0 +1,29 @@
+{% extends "backoffice/base.html.twig" %}
+
+{% block body %}
+    <div class="container-xl">
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex align-content-center">
+                    <a href="{{ path("admin_project_manage") }}" class="btn btn-sm btn-light"><i class="fa fa-arrow-left"></i></a>
+                    <h5 class="m-0 lh-base">Projet</h5>
+                </div>
+            </div>
+            {{ form_start(form) }}
+            <div class="card-body">
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.active) }}
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <div>
+                    <a href="{{ path("admin_project_manage") }}" class="btn btn-danger">Annuler</a>
+                </div>
+                {{ form_row(form.save) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock %}

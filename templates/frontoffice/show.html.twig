@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-xl">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h1>{{ project.title }}</h1>
+            </div>
+            <div class="card-body">
+                <p>{{ project.description }}</p>
+
+                <div>
+                    <a href="#docs" class="btn btn-primary">Docs</a>
+                    <a href="#Repository" class="btn btn-primary ms-3">Repository</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex align-content-center">
+                    <h5 class="m-0 lh-base">Versions</h5>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                    <tr class="bg-light">
+                        <th>Nom</th>
+                        <th>Tags</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for version in project.versions %}
+                        <tr class="border-top" style="opacity: {{ version.opacity }}%;">
+                            <td>{{ version.name }}</td>
+                            <td>
+                                {% if version.tags|length > 0 %}
+                                    {% for tag in version.tags %}
+                                        <span class="badge" style="background: {{ tag.color }};">{{ tag.name }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

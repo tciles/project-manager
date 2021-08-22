@@ -1,0 +1,47 @@
+{% extends "backoffice/base.html.twig" %}
+
+{% block body %}
+    <div class="container-xl">
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-content-center">
+                    <h5 class="m-0 lh-base">Projets</h5>
+                    <a href="{{ path("admin_project_create") }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>#</th>
+                            <th>Titre</th>
+                            <th>Statut</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in projects %}
+                            <tr class="border-top">
+                                <td>{{ project.id }}</td>
+                                <td>{{ project.title }}</td>
+                                <td>{% if project.active %}
+                                        <span class="badge bg-success">Actif</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactif</span>
+                                    {% endif %}</td>
+                                <td class="text-end">
+                                    <a href="{{ path("admin_project_update", {id: project.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                {{ projects|length }} résultats
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

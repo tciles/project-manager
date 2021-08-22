@@ -1,0 +1,45 @@
+{% extends "backoffice/base.html.twig" %}
+
+{% block body %}
+    <div class="container-xl">
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-content-center">
+                    <h5 class="m-0 lh-base">Tags</h5>
+                    <a href="{{ path("admin_tag_create") }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                        <tr class="bg-light">
+                            <th>#</th>
+                            <th>Titre</th>
+                            <th>Couleur</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tag in tags %}
+                            <tr class="border-top">
+                                <td>{{ tag.id }}</td>
+                                <td>{{ tag.name }}</td>
+                                <td>
+                                    <span class="badge" style="background: {{ tag.color }};">{{ tag.color }}</span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ path("admin_tag_update", {id: tag.id}) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer">
+                {{ tags|length }} résultats
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

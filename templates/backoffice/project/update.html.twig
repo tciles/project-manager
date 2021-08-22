@@ -1,0 +1,77 @@
+{% extends "backoffice/base.html.twig" %}
+
+{% block body %}
+    <div class="container-xl">
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex align-content-center">
+                    <a href="{{ path("admin_project_manage") }}" class="btn btn-sm btn-light"><i class="fa fa-arrow-left"></i></a>
+                    <h5 class="m-0 lh-base">Projet</h5>
+                </div>
+            </div>
+            {{ form_start(form) }}
+            <div class="card-body">
+                {{ form_row(form.title) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.active) }}
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <div>
+                    <a href="{{ path("admin_project_manage") }}" class="btn btn-danger">Annuler</a>
+                </div>
+                {{ form_row(form.save) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <div class="d-flex align-content-center">
+                    <h5 class="m-0 lh-base">Versions</h5>
+                    <a href="{{ path("admin_project_version_manage", {id: project.id}) }}" class="btn btn-sm btn-light"><i class="fa fa-edit"></i></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-responsive table-borderless">
+                    <thead>
+                    <tr class="bg-light">
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Tags</th>
+                        <th>Statut</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for version in project.versions %}
+                        <tr class="border-top">
+                            <td>{{ version.id }}</td>
+                            <td>{{ version.name }}</td>
+                            <td>
+                                {% if version.tags|length > 0 %}
+                                    {% for tag in version.tags %}
+                                        <span class="badge" style="background: {{ tag.color }};">{{ tag.name }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                            <td>{% if version.active %}
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Inactif</span>
+                                {% endif %}</td>
+                            <td class="text-end">
+                                <a href="{{ path("admin_project_version_update", { id: project.id, version_id: version.id }) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
