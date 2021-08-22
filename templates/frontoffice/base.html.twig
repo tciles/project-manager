@@ -14,9 +14,9 @@
         {% endblock %}
     </head>
     <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">PM</a>
+            <a class="navbar-brand" href="{{ path("home_index") }}">PM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -24,17 +24,15 @@
 
             {% set route_name = app.request.get('_route') %}
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if route_name matches '/^home_index/' %}active{% endif %}"
-                           aria-current="page"
-                           href="{% if route_name matches '/^home_index/' %}#{% else %}{{ path("home_index") }}{% endif %}">Accueil</a>
-                    </li>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link {% if route_name matches '/^admin_home_index/' %}active{% endif %}"
                            aria-current="page"
-                           href="{% if route_name matches '/^admin_homeadmin_home_index/' %}#{% else %}{{ path("admin_homeadmin_home_index") }}{% endif %}">Admin</a>
+                           href="{% if route_name matches '/^admin_homeadmin_home_index/' %}#{% else %}{{ path("admin_homeadmin_home_index") }}{% endif %}">
+                            <i class="fa fa-cog"></i>
+                            Administration
+                        </a>
                     </li>
                 </ul>
             </div>

@@ -38,6 +38,12 @@ class ProjectVersion
     private ?Project $project = null;
 
     /**
+     * @ORM\Column(type="string", length="255", nullable=true)
+     * @var string|null
+     */
+    private ?string $url = null;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\ProjectTag", inversedBy="versions", cascade={"persist"})
      * @ORM\JoinTable(name="project_version_has_project_tag")
      * @var Collection<int, ProjectTag>
@@ -164,6 +170,24 @@ class ProjectVersion
             $tag->removeVersion($this);
         }
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param string|null $url
+     * @return ProjectVersion
+     */
+    public function setUrl(?string $url): ProjectVersion
+    {
+        $this->url = $url;
         return $this;
     }
 

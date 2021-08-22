@@ -38,6 +38,12 @@ class Project
     private ?string $repository = null;
 
     /**
+     * @ORM\Column(type="string", length="255", nullable=true)
+     * @var string|null
+     */
+    private ?string $fullname = null;
+
+    /**
      * @ORM\Column(type="boolean")
      * @var boolean
      */
@@ -190,6 +196,24 @@ class Project
             }
         }
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFullname(): ?string
+    {
+        return $this->fullname;
+    }
+
+    /**
+     * @param string|null $fullname
+     * @return Project
+     */
+    public function setFullname(?string $fullname): Project
+    {
+        $this->fullname = $fullname;
         return $this;
     }
 }

@@ -17,11 +17,11 @@ class HomeController extends AbstractController
      * @param ProjectRepository $repository
      * @return Response
      */
-    public function index(ProjectRepository $repository): Response
+    public function listProjects(ProjectRepository $repository): Response
     {
         $projects = $repository->findBy(['active' => 1]);
 
-        return $this->render('frontoffice/home.html.twig', [
+        return $this->render('frontoffice/list_projects.html.twig', [
             'projects' => $projects,
         ]);
     }
@@ -32,7 +32,7 @@ class HomeController extends AbstractController
      * @param ProjectVersionRepository $projectVersionRepository
      * @return Response
      */
-    public function show(Project $project, ProjectVersionRepository $projectVersionRepository): Response
+    public function showProject(Project $project, ProjectVersionRepository $projectVersionRepository): Response
     {
         $versions = $projectVersionRepository->findBy([
             'active' => true,
@@ -43,7 +43,7 @@ class HomeController extends AbstractController
 
         $project->setVersions(new ArrayCollection($versions));
 
-        return $this->render('frontoffice/show.html.twig', [
+        return $this->render('frontoffice/show_project.html.twig', [
             'project' => $project,
         ]);
     }

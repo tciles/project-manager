@@ -1,0 +1,15 @@
+@startwbs
+'https://plantuml.com/wbs-diagram
+
+* Project Manager
+** Gestion des utilisateurs
+*** Créer / Modifier un utilisateur
+*** Désactiver / Bloquer les accès d'un utilisateur
+** Gestion des projets
+*** Créer / Modifier un projet
+**** Rechercher des versions sur Github / Gitlab
+**** Ajouter / Modifier / Supprimer une version
+***** Tagger une version
+** Gestion des tags
+*** Créer / Modifier / Supprimer un tag
+@endwbs

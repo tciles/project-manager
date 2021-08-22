@@ -21,6 +21,10 @@ class ProjectVersionType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom'
             ])
+            ->add('url', TextType::class, [
+                'label' => 'URL',
+                'required' => false
+            ])
             ->add('active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false

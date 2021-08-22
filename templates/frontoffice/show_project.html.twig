@@ -1,0 +1,74 @@
+{% extends "frontoffice/base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid d-flex flex-wrap justify-content-between">
+        <div class="col-xl-8 col-md-12 p-3 pb-sm-0">
+            <div class="card mt-3 shadow-sm">
+                <div class="card-header">
+                    <h1>{{ project.title }}</h1>
+                </div>
+                <div class="card-body">
+                    <p>{{ project.description }}</p>
+
+                    <div>
+{#                        <a href="#docs" class="btn btn-primary me-3">Docs</a>#}
+                        {% if project.repository is not null %}
+                            <a href="{{ project.repository }}" target="_blank" class="btn btn-primary ">Repository</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3 shadow-sm">
+                <div class="card-header">
+                    <div class="d-flex align-content-center">
+                        <h5 class="m-0 lh-base">Contributeurs</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    test
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-12 p-3 pt-sm-0 pt-xl-3">
+            <div class="card mt-3 shadow-sm">
+                <div class="card-header">
+                    <div class="d-flex align-content-center">
+                        <h5 class="m-0 lh-base">Versions</h5>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive table-borderless">
+                        <thead>
+                        <tr class="bg-light">
+                            <th>Nom</th>
+                            <th>Tags</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for version in project.versions %}
+                            <tr class="border-top" style="opacity: {{ version.opacity }}%;">
+                                <td>
+                                    {% if version.url is not null %}
+                                        <a href="{{ version.url }}" target="_blank" class="text-decoration-none fw-bold">{{ version.name }}</a>
+                                    {% else %}
+                                        {{ version.name }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if version.tags|length > 0 %}
+                                        {% for tag in version.tags %}
+                                            <span class="badge" style="background: {{ tag.color }};">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

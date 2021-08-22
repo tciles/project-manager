@@ -23,6 +23,14 @@ class ProjectType extends AbstractType
                 'label' => 'Description',
                 'required' => false
             ])
+            ->add('repository', TextType::class, [
+                'label' => 'Repository',
+                'required' => false
+            ])
+            ->add('fullname', TextType::class, [
+                'label' => 'Fullname',
+                'required' => false
+            ])
             ->add('active', CheckboxType::class, [
                 'label' => 'Actif',
                 'required' => false
