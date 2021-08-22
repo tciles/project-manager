@@ -2,48 +2,73 @@
 
 namespace App\Service;
 
-use App\Adapter\GithubApiAdapter;
 use App\Entity\Project;
 use App\Entity\ProjectVersion;
 use App\Repository\ProjectRepository;
 use App\Repository\ProjectVersionRepository;
+use App\Resolver\ApiClientResolverInterface;
+
+use function is_array;
 
 class ProjectService
 {
+    /**
+     * @var ProjectRepository
+     */
     private ProjectRepository $projectRepository;
 
+    /**
+     * @var ProjectVersionRepository
+     */
     private ProjectVersionRepository $projectVersionRepository;
 
-    private GithubApiAdapter $client;
+    /**
+     * @var ApiClientResolverInterface
+     */
+    private ApiClientResolverInterface $apiClientResolver;
 
+    /**
+     * @param ProjectRepository $projectRepository
+     * @param ProjectVersionRepository $projectVersionRepository
+     * @param ApiClientResolverInterface $apiClientResolver
+     */
     public function __construct(
         ProjectRepository $projectRepository,
         ProjectVersionRepository $projectVersionRepository,
-        GithubApiAdapter $client
+        ApiClientResolverInterface $apiClientResolver
     ) {
         $this->projectRepository = $projectRepository;
         $this->projectVersionRepository = $projectVersionRepository;
-        $this->client = $client;
+        $this->apiClientResolver = $apiClientResolver;
     }
 
+    /**
+     *
+     */
     public function synchronizeProjectVersions(): void
     {
         $projects = $this->projectRepository->findProjectsForVersionsSynchronisation();
 
+        /** @var Project $project */
         foreach ($projects as $project) {
             $this->syncReleasesForProject($project);
         }
     }
 
+    /**
+     * @param Project $project
+     */
     private function syncReleasesForProject(Project $project): void
     {
-        $response = $this->client->getReleases($project);
+        $client = $this->apiClientResolver->resolve($project->getRepository());
 
-        if (empty($response) || !\is_array($response)) {
+        $response = $client->getReleases($project);
+
+        if (empty($response) || !is_array($response)) {
             return;
         }
 
-        foreach($response as $release) {
+        foreach ($response as $release) {
             if (!isset($release['tag_name'])) {
                 continue;
             }
@@ -52,7 +77,12 @@ class ProjectService
         }
     }
 
-    private function addReleaseForProject(Project $project, array $release): void {
+    /**
+     * @param Project $project
+     * @param array $release
+     */
+    private function addReleaseForProject(Project $project, array $release): void
+    {
         $projectVersion = $this->projectVersionRepository->findOneBy([
             'active' => true,
             'name' => $release['tag_name'],
